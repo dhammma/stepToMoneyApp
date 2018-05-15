@@ -1,6 +1,9 @@
 import AppleHealthKit from 'rn-apple-healthkit';
+import { NativeAppEventEmitter } from 'react-native';
 
 class FitService {
+  subscriber = null;
+
   isAvailable = () => new Promise((resolve, reject) => {
     AppleHealthKit.isAvailable((error, result) => {
       if (error) {
@@ -25,6 +28,8 @@ class FitService {
         reject(error);
       }
 
+      AppleHealthKit.initStepCountObserver({}, () => {});
+
       resolve();
     });
   });
@@ -43,6 +48,14 @@ class FitService {
       resolve(result);
     });
   });
+
+  subscribe = (callback) => {
+    NativeAppEventEmitter.addListener('change:steps', (event) => {
+      console.log('event:change:steps', event);
+
+      callback(this);
+    });
+  }
 }
 
 export default new FitService();

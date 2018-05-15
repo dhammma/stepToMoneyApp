@@ -31,9 +31,21 @@ class FitStore {
     }
 
     try {
+      FitService.subscribe(async () => {
+        const nextSteps = await FitService.getSteps();
+
+        this.stepCount = Math.floor(nextSteps.value);
+      });
+    } catch (e) {
+      const error = 'Step update failed.';
+
+      this.error = error;
+    }
+
+    try {
       const stepCount = await FitService.getSteps();
 
-      this.stepCount = stepCount.value;
+      this.stepCount = Math.floor(stepCount.value);
     } catch (e) {
       const error = 'Get steps failed.';
 
