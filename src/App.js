@@ -79,20 +79,24 @@ export default class App extends Component {
       );
     }
 
+    const moneyCount = Math.floor(stepCount / 1000);
+
     return (
       <View style={styles.container}>
-        <Text>
-          Steps:
-        </Text>
-        <Text>
-          {stepCount}
-        </Text>
-        <Text>
-          Today you are earned:
-        </Text>
-        <Text>
-          {stepCount}
-        </Text>
+        <View style={styles.dataView}>
+          <Text style={styles.bold}>
+            Steps:
+          </Text>
+          <Text style={styles.value}>
+            {stepCount}
+          </Text>
+          <Text style={[styles.bold, styles.second]}>
+            Today you are earned:
+          </Text>
+          <Text style={styles.value}>
+            {moneyCount} cents
+          </Text>
+        </View>
       </View>
     );
   }
@@ -121,5 +125,25 @@ const styles = StyleSheet.create({
     marginRight: 15,
     textAlign: 'center',
     color: 'red',
+  },
+  dataView: {
+    width: 200,
+    borderColor: 'green',
+    borderWidth: 5,
+    borderRadius: 200,
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  second: {
+    marginTop: 15,
+  },
+  value: {
+    fontSize: 16,
+    letterSpacing: 0.15,
+    marginTop: 10,
   }
 });
